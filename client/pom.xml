@@ -20,8 +20,8 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-		    <version>2.9.4</version>
-	</dependency>
+            <version>2.9.4</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -36,6 +36,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <finalName>client</finalName>
                     <archive>
                         <manifest>
                             <mainClass>com.datarepublic.simplecab.Client</mainClass>

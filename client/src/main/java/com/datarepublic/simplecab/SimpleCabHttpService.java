@@ -18,7 +18,7 @@ public class SimpleCabHttpService implements SimpleCabService {
     public TripSummary getTripSummary(List<String> medallions, Date pickupDate) {
         TripSummary results = new TripSummary();
         String url = encodeUrl(medallions, pickupDate);
-        System.out.println(url);
+        System.out.format("GET: %s\n", url);
 
         try {
             String content = Request.Get(url)
@@ -30,11 +30,9 @@ public class SimpleCabHttpService implements SimpleCabService {
             // System.out.println(content);
             results = SimpleCabUtil.JSON_MAPPER.readValue(content, TripSummary.class);
         } catch (ClientProtocolException e) {
-            // System.err.println(e);
             e.printStackTrace();
         } catch (IOException e) {
             System.err.println("Could not connect to the server.");
-            // e.printStackTrace();
         }
 
         return results;

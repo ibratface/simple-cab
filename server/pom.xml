@@ -40,6 +40,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <finalName>server</finalName>
+                </configuration>
             </plugin>
         </plugins>
     </build>

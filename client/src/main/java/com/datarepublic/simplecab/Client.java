@@ -44,13 +44,15 @@ public class Client {
 
                 // by default we request all medallions
                 List<String> uncached = medallions;
+                
+                // if caching is enabled, only request those not in the cache
                 if (useCache) {
-                    // only request those not in the cache
                     uncached = medallions.stream()
                         .filter(medallion -> !cache.contains(medallion, pickupDate))
                         .collect(Collectors.toList());
                 }
 
+                // don't make a request if there is no need
                 if (!uncached.isEmpty())
                 {
                     // fetch uncached from the server
