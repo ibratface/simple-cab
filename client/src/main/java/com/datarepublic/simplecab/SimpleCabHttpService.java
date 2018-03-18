@@ -1,14 +1,10 @@
 package com.datarepublic.simplecab;
 
 import java.util.List;
-import java.util.Map;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Date;
+import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
-
-import java.io.IOException;
-import java.util.Date;
 
 public class SimpleCabHttpService implements SimpleCabService {
 
@@ -19,25 +15,20 @@ public class SimpleCabHttpService implements SimpleCabService {
     }
 
     @Override
-    public Map<String, Integer> getTripCountsBy(List<String> medallions, Date pickupDate) {
-        Map<String, Integer> results = null;
+    public TripSummary getTripSummary(List<String> medallions, Date pickupDate) {
+        TripSummary results = new TripSummary();
         String url = encodeUrl(medallions, pickupDate);
+        System.out.println(url);
 
         try {
-            System.out.println(url);
             String content = Request.Get(url)
                 .connectTimeout(1000)
                 .socketTimeout(1000)
                 .execute()
                 .returnContent()
                 .asString();
-            System.out.println(content);
-            ObjectMapper mapper = new ObjectMapper();
-            results = mapper.readValue(content, Map.class);
-            results.forEach((k, v) -> {
-                System.out.println(k);
-                System.out.println(v);
-            });
+            // System.out.println(content);
+            results = SimpleCabUtil.JSON_MAPPER.readValue(content, TripSummary.class);
         } catch (ClientProtocolException e) {
             // System.err.println(e);
             e.printStackTrace();
